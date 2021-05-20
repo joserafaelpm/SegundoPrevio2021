@@ -14,7 +14,8 @@ public class Conexion {
 	private static Conexion db;
 	private PreparedStatement preparedStatement;
 
-	private static final String url = "jdbc:postgresql://queenie.db.elephantsql.com/";
+	private static final String host = "queenie.db.elephantsql.com";
+	private static final String url = "jdbc:postgresql://" + host + ":5432/";
 	private static final String dbName = "mnjgxshj";
 	private static final String driver = "org.postgresql.Driver";
 	private static final String userName = "mnjgxshj";

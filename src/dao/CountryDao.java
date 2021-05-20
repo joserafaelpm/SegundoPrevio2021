@@ -6,7 +6,7 @@ import java.util.List;
 import modelo.Country;
 
 public interface CountryDao {
-	public void insertCountry(Country contry) throws SQLException;
+	public void insertCountry(Country country) throws SQLException;
 	public Country selectCountry(String id);
 	public List < Country > selectAllCountry();
 	public void deleteCountry(String id) throws SQLException;
