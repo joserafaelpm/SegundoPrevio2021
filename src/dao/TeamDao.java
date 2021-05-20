@@ -6,9 +6,9 @@ import java.util.List;
 import modelo.Team;
 
 public interface TeamDao {
-	public void insertUser(Team team) throws SQLException;
-	public Team selectUser(int id);
-	public List < Team > selectAllUsers();
-	public boolean deleteUser(int id) throws SQLException;
-	public boolean updateUser(Team team) throws SQLException;
+	public void insertTeam(Team team) throws SQLException;
+	public Team selectTeam(String id);
+	public List < Team > selectAllTeam();
+	public void deleteTeam(String id) throws SQLException;
+	public void updateTeam(Team team) throws SQLException;
 }

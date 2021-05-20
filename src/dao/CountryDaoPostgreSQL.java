@@ -8,7 +8,6 @@ import java.util.List;
 import com.mysql.jdbc.PreparedStatement;
 
 import modelo.Country;
-import modelo.Team;
 import util.Conexion;
 
 public class CountryDaoPostgreSQL implements CountryDao {
@@ -25,7 +24,7 @@ public class CountryDaoPostgreSQL implements CountryDao {
 		this.conexion = Conexion.getConexion();
 	}
 	
-	public void insert(Country country) {
+	public void insertCountry(Country country) {
 		try {
 			PreparedStatement preparedStatement = (PreparedStatement) conexion.setPreparedStatement(INSERT_USUARIO_SQL);
 			preparedStatement.setString(1, country.getName());
@@ -35,7 +34,7 @@ public class CountryDaoPostgreSQL implements CountryDao {
 		}
 	}
 
-	public void delete(String id) {
+	public void deleteCountry(String id) {
 		try {
 			PreparedStatement preparedStatement = (PreparedStatement) conexion.setPreparedStatement(DELETE_USUARIO_SQL);
 			preparedStatement.setString(1, id);
@@ -45,7 +44,7 @@ public class CountryDaoPostgreSQL implements CountryDao {
 		}
 	}
 	
-	public void update(Country country) {
+	public void updateCountry(Country country) {
 		try {
 			PreparedStatement preparedStatement = (PreparedStatement) conexion.setPreparedStatement(UPDATE_USUARIO_SQL);
 			preparedStatement.setString(1, country.getName());
@@ -56,46 +55,41 @@ public class CountryDaoPostgreSQL implements CountryDao {
 		}
 	}
 	
-	public List<Country> selectAll(){
-		List<Country> contrys = new ArrayList<>();
+	public List<Country> selectAllCountry(){
+		List<Country> countrys = new ArrayList<>();
 		try {
 			PreparedStatement preparedStatement = (PreparedStatement) conexion.setPreparedStatement(SELECT_ALL_USUARIOS);
 			ResultSet rs = conexion.query();
 			while(rs.next()) {
-				int id = rs.getInt("id");
+				String id = rs.getString("id");
 				System.out.println(id);
-				String nombre = rs.getString("nombre");
-				String email = rs.getString("email");
-				String  pais  = rs.getString("pais");
-				usuarios.add(new Country(id, nombre, email, pais));
+				String name = rs.getString("name");
+				countrys.add(new Country(id, name));
 			}
 			
 		}catch(SQLException e){
 			
 		}
-		return usuarios;
+		return countrys;
 	}
 	
 	
-	public Usuario select(int id){
-		Usuario usuario = null;
+	public Country selectCountry(String id){
+		Country country = null;
 		
 		try {
 			PreparedStatement preparedStatement = (PreparedStatement) conexion.setPreparedStatement(SELECT_USUARIO_BY_ID);
-			preparedStatement.setInt(1, id);
+			preparedStatement.setString(1, "id");
 			ResultSet rs = conexion.query();
-			
 			while(rs.next()) {
-				String nombre = rs.getString("nombre");
-				String email = rs.getString("email");
-				String  pais  = rs.getString("pais");
-				usuario = new Usuario(id, nombre, email, pais);
+				String name = rs.getString("name");
+				country = new Country(id,name);
 			}
 			
 		}catch(SQLException e){
 			
 		}
-		return usuario;
+		return country;
 	}
 
 

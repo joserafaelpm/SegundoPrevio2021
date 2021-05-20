@@ -24,82 +24,77 @@ public class TeamDaoPostgreSQL implements TeamDao {
 		this.conexion = Conexion.getConexion();
 	}
 	
-	public void insert(Team team) {
+	public void insertTeam(Team team) {
 		try {
 			PreparedStatement preparedStatement = (PreparedStatement) conexion.setPreparedStatement(INSERT_USUARIO_SQL);
-			preparedStatement.setString(1, team.getNombre());
-			preparedStatement.setString(2, team.getEmail());
-			preparedStatement.setString(3, usuario.getPais());
+			preparedStatement.setString(1, team.getName());
+			preparedStatement.setString(2, team.getCountry());
 			conexion.execute();
 		} catch (SQLException e) {
 
 		}
 	}
 
-	public void delete(int id) {
+	public void deleteTeam(String id) {
 		try {
 			PreparedStatement preparedStatement = (PreparedStatement) conexion.setPreparedStatement(DELETE_USUARIO_SQL);
-			preparedStatement.setInt(1, id);
-			
+			preparedStatement.setString(1, id);
 			conexion.execute();
 		} catch (SQLException e) {
 
 		}
 	}
 	
-	public void update(Usuario usuario) {
+	public void updateTeam(Team team) {
 		try {
 			PreparedStatement preparedStatement = (PreparedStatement) conexion.setPreparedStatement(UPDATE_USUARIO_SQL);
-			preparedStatement.setString(1, usuario.getNombre());
-			preparedStatement.setString(2, usuario.getEmail());
-			preparedStatement.setString(3, usuario.getPais());
-			preparedStatement.setInt(4, usuario.getId());
+			preparedStatement.setString(1, team.getName());
+			preparedStatement.setString(2, team.getCountry());
+			preparedStatement.setString(3, team.getId());
 			conexion.execute();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
 	}
 	
-	public List<Usuario> selectAll(){
-		List<Usuario> usuarios = new ArrayList<>();
+	public List<Team> selectAllTeam(){
+		List<Team> teams = new ArrayList<>();
 		try {
 			PreparedStatement preparedStatement = (PreparedStatement) conexion.setPreparedStatement(SELECT_ALL_USUARIOS);
 			ResultSet rs = conexion.query();
 			while(rs.next()) {
-				int id = rs.getInt("id");
+				String id = rs.getString("id");
 				System.out.println(id);
-				String nombre = rs.getString("nombre");
-				String email = rs.getString("email");
-				String  pais  = rs.getString("pais");
-				usuarios.add(new Usuario(id, nombre, email, pais));
+				String name = rs.getString("name");
+				String country = rs.getString("country");
+				teams.add(new Team(id, name, country));
 			}
 			
 		}catch(SQLException e){
 			
 		}
-		return usuarios;
+		return teams;
 	}
 	
 	
-	public Usuario select(int id){
-		Usuario usuario = null;
+	public Team selectTeam(String id){
+		Team team = null;
 		
 		try {
 			PreparedStatement preparedStatement = (PreparedStatement) conexion.setPreparedStatement(SELECT_USUARIO_BY_ID);
-			preparedStatement.setInt(1, id);
+			preparedStatement.setString(1, id);
 			ResultSet rs = conexion.query();
 			
 			while(rs.next()) {
-				String nombre = rs.getString("nombre");
-				String email = rs.getString("email");
-				String  pais  = rs.getString("pais");
-				usuario = new Usuario(id, nombre, email, pais);
+				String name = rs.getString("name");
+				String country = rs.getString("country");
+				team = new Team(id, name, country);
 			}
 			
 		}catch(SQLException e){
 			
 		}
-		return usuario;
+		return team;
 	}
 
 }
